@@ -1,0 +1,1 @@
+pyinstaller --noconfirm --onefile --windowed init.py

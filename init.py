@@ -22,7 +22,7 @@ def inject_token(window, token):
 
 def handle_token_file(window):
     file_types = ('Text files (*.txt)', 'All files (*.*)')
-    file_path = window.create_file_dialog(webview.OPEN_DIALOG, allow_multiple=False, file_types=file_types)
+    file_path = window.create_file_dialog(webview.FileDialog.OPEN, allow_multiple=False, file_types=file_types)
 
     if not file_path:
         return
@@ -42,8 +42,9 @@ def handle_token_file(window):
         print(f'[+] Injection du token en cours...')
         inject_token(window, token)
 
-        with open(path, 'w', encoding='utf-8') as f:
-            f.writelines(lines[1:])
+        if len(lines) > 1:
+            with open(path, 'w', encoding='utf-8') as f:
+                f.writelines(lines[1:])
             
     except Exception as e:
         print(f'[-] Erreur : {e}')
