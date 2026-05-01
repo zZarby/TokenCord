@@ -6,18 +6,15 @@ WINDOW_TITLE = 'TokenCord'
 LOGIN_URL = 'https://discord.com/login'
 
 def inject_token(window, token):
-    js_code = f'''
-    (function() {{
-        let token = '{token}';
-        function login(t) {{
-            setInterval(() => {{
-                document.body.appendChild(document.createElement('iframe')).contentWindow.localStorage.token = `'${{t}}'`;
-            }}, 50);
-            setTimeout(() => {{ location.reload(); }}, 2500);
-        }}
-        login(token);
-    }})();
-    '''
+    print('[+] injecting on : ' + token)
+    js_code = """
+    function login(token) {
+        setInterval(() => {
+            document.body.appendChild(document.createElement`iframe`).contentWindow.localStorage.token = `"${token}"`;
+        }, 50);
+        setTimeout(() => { location.reload(); }, 2500);
+    }
+    """ + f"\nlogin('{token}');"
     window.evaluate_js(js_code)
 
 def handle_token_file(window):
@@ -33,13 +30,12 @@ def handle_token_file(window):
             lines = f.readlines()
 
         if not lines:
-            print('[-] Le fichier est vide.')
+            print('[-] File is empty')
             return
 
         raw_line = lines[0].strip()
         token = raw_line.split(':')[-1] if ':' in raw_line else raw_line
 
-        print(f'[+] Injection du token en cours...')
         inject_token(window, token)
 
         if len(lines) > 1:
@@ -57,7 +53,7 @@ def main():
         height=1000
     )
     
-    webview.start(handle_token_file, window, debug=False)
+    webview.start(handle_token_file, window, debug=True)
 
 if __name__ == '__main__':
     main()
