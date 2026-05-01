@@ -17,7 +17,7 @@ TokenCord is a lightweight Discord client wrapper built with Python and `pywebvi
 ### Installation
 1. Clone the repository:
 ```bash
-git clone [https://github.com/zZarby/TokenCord.git](https://github.com/zZarby/TokenCord.git)
+git clone https://github.com/zZarby/TokenCord.git
 cd TokenCord
 ```
 2. Install dependencies:
